@@ -1,4 +1,4 @@
-const usuario ={}
+const usuarioCtrl ={}
 
 const Usuario = require('../models/Usuario')
 
