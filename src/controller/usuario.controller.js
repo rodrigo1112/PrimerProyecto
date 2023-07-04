@@ -4,6 +4,7 @@ const Usuario = require('../models/Usuario')
 
 usuarioCtrl.getUsu = async(req, res) =>{
     const usuarios = await Usuario.find()
+    res.json(usuarios)
 }
 
 usuarioCtrl.createUsu = async(req, res) =>{
