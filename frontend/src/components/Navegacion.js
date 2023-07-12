@@ -10,6 +10,7 @@ const Navegacion = () => {
           <Link className="navbar-brand" to="/">
             Usuarios
           </Link>
+          
           <button
             className="navbar-toggler"
             type="button"
