@@ -21,7 +21,7 @@ const ListaUsuarios = () => {
   const handleEliminarUsuario = async (id) => {
     try {
       await axios.delete(`http://localhost:4000/api/usuarios/${id}`);
-      setLista(lista.filter((usuario) => usuario.id !== id));
+      setLista(lista.filter((usuario) => usuario._id !== id));
     } catch (error) {
       console.error('Error al eliminar el usuario:', error);
     }
@@ -30,7 +30,7 @@ const ListaUsuarios = () => {
   return (
     <div className="row">
       {lista.map((usuario) => (
-        <div className="col-md-4 p-2" key={usuario.id}>
+        <div className="col-md-4 p-2" key={usuario._id}>
           <div className="card">
             <div className="card-header">
               <h5>Nombre: {usuario.nombre}</h5>
@@ -46,7 +46,7 @@ const ListaUsuarios = () => {
             <div className="card-footer">
               <button
                 className="btn btn-danger"
-                onClick={() => handleEliminarUsuario(usuario.id)}
+                onClick={() => handleEliminarUsuario(usuario._id)}
               >
                 Eliminar
               </button>
@@ -59,3 +59,4 @@ const ListaUsuarios = () => {
 };
 
 export default ListaUsuarios;
+
