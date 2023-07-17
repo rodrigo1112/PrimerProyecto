@@ -1,7 +1,9 @@
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { Link } from 'react-router-dom';
 
+ 
 const ListaUsuarios = () => {
   const [lista, setLista] = useState([]);
 
@@ -50,6 +52,10 @@ const ListaUsuarios = () => {
               >
                 Eliminar
               </button>
+
+              <Link className='btn btn-primary m-1' to={`/edit/${usuario._id}`}>
+                  Editar
+              </Link>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useParams } from 'react-router-dom'
 
 const CrearUsuarios = () => {
 
@@ -11,7 +12,10 @@ const CrearUsuarios = () => {
       correo:''
   }
 
+let {id} = useParams();
+
   const [usuario, setUsuario] = useState(valorInicial)
+  const [subId, setSubId] = useState(id)
 
   const capturarDatos = (e)=>{
       const {name, value} = e.target
@@ -35,6 +39,12 @@ const CrearUsuarios = () => {
  
     setUsuario({...valorInicial})
   }
+
+
+  // Logica para hacer una peticion a la api
+  useEffect(()=>{
+    if(subId !=='')
+  },[])
 
   return (
     <div className="col-md-6 offset-md-3">
