@@ -3,27 +3,26 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 
 const CrearUsuarios = () => {
-
   const valorInicial = {
-      nombre: '',
-      apellido: '',
-      edad:18,
-      telefono:0,
-      correo:''
-  }
+    nombre: "",
+    apellido: "",
+    edad: 18,
+    telefono: 0,
+    correo: "",
+  };
 
-let {id} = useParams();
+  let { id } = useParams();
 
-  const [usuario, setUsuario] = useState(valorInicial)
-  const [subId, setSubId] = useState(id)
+  const [usuario, setUsuario] = useState(valorInicial);
+  const [subId, setSubId] = useState(id);
 
-  const capturarDatos = (e)=>{
-      const {name, value} = e.target
-      setUsuario({...usuario, [name]: value})
-  }
+  const capturarDatos = (e) => {
+    const { name, value } = e.target;
+    setUsuario({ ...usuario, [name]: value });
+  };
 
-  const guardarDatos = async(e)=>{
-    e.preventDefault()
+  const guardarDatos = async (e) => {
+    e.preventDefault();
     //console.log(usuario);
 
     //crear la logica para la peticon post
@@ -32,25 +31,53 @@ let {id} = useParams();
       apellido: usuario.apellido,
       edad: usuario.edad,
       telefono: usuario.telefono,
-      correo: usuario.correo
-    }
+      correo: usuario.correo,
+    };
 
-    await axios.post('http://localhost:4000/api/usuarios', newUser) 
- 
-    setUsuario({...valorInicial})
-  }
+    await axios.post("http://localhost:4000/api/usuarios", newUser);
 
+    setUsuario({ ...valorInicial });
+  };
+
+  // Funcion para actualizar el usuario
+  const actualizarUser = async (e) => {
+    e.preventDefault();
+    const newUser = {
+      nombre: usuario.nombre,
+      apellido: usuario.apellido,
+      edad: usuario.edad,
+      telefono: usuario.telefono,
+      correo: usuario.correo,
+    };
+
+    await axios.put("http://localhost:4000/api/usuarios/" + subId, newUser);
+    setUsuario({ ...valorInicial });
+    setSubId("");
+  };
 
   // Logica para hacer una peticion a la api
-  useEffect(()=>{
-    if(subId !=='')
-  },[])
+  const obtUno = async (valorId) => {
+    const res = await axios.get("http://localhost:4000/api/usuarios/" + valorId);
+    setUsuario({
+      nombre: res.data.nombre,
+      apellido: res.data.apellido,
+      telefono: res.data.telefono,
+      edad: res.data.edad,
+      correo: res.data.correo,
+    });
+  };
+
+  useEffect(() => {
+    if (subId !== "") {
+      obtUno(subId);
+    }
+  }, [subId]);
 
   return (
     <div className="col-md-6 offset-md-3">
       <div className="card card-body">
-        <form onSubmit={guardarDatos} >
-            <h2 className='text-center'>CrearUsuario</h2>
+        <form onSubmit={guardarDatos}>
+          <h2 className="text-center">CrearUsuario</h2>
           <div className="mb-3">
             <label>Nombre:</label>
 
@@ -59,7 +86,7 @@ let {id} = useParams();
               className="form-control"
               placeholder="ingresar el nombre del usuario"
               required
-              name='nombre'
+              name="nombre"
               value={usuario.nombre}
               onChange={capturarDatos}
             />
@@ -73,7 +100,7 @@ let {id} = useParams();
               className="form-control"
               placeholder="ingresar el apellido del usuario"
               required
-              name='apellido'
+              name="apellido"
               value={usuario.apellido}
               onChange={capturarDatos}
             />
@@ -87,7 +114,7 @@ let {id} = useParams();
               className="form-control"
               placeholder="ingresar la edad del usuario"
               required
-              name='edad'
+              name="edad"
               value={usuario.edad}
               onChange={capturarDatos}
             />
@@ -101,7 +128,7 @@ let {id} = useParams();
               className="form-control"
               placeholder="ingresar el telefono del usuario"
               required
-              name='telefono'
+              name="telefono"
               value={usuario.telefono}
               onChange={capturarDatos}
             />
@@ -115,17 +142,25 @@ let {id} = useParams();
               className="form-control"
               placeholder="ingresar correo del usuario"
               required
-              name='correo'
+              name="correo"
               value={usuario.correo}
               onChange={capturarDatos}
             />
           </div>
 
-          <button className="btn btn-primary form-control">Guardar Usuario</button>
+          <button className="btn btn-primary form-control">
+            Guardar Usuario
+          </button>
+        </form>
+
+        <form onSubmit={actualizarUser}>
+          <button className="btn btn-danger form-control mt-2">
+            Actualizar Informacion
+          </button>
         </form>
       </div>
     </div>
-  ); 
+  );
 } 
 
-export default CrearUsuarios  
+export default CrearUsuarios
