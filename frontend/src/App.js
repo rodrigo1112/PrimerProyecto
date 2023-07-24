@@ -6,6 +6,7 @@ import './App.css';
 import Navegacion from './components/Navegacion';
 import CrearUsuarios from './components/CrearUsuarios';
 import ListaUsuarios from './components/ListaUsuarios';
+import EditarUsuarios from './components/EditarUsuarios';
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<ListaUsuarios/>} />
           <Route path="/CrearUsuarios" element={<CrearUsuarios/>} />
-          <Route path="/edit/:id" element={<CrearUsuarios/>} />
+          <Route path="/edit/:id" element={<EditarUsuarios/>} />
         </Routes> 
       </div>
     </div>

@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useParams } from 'react-router-dom'
 
 const CrearUsuarios = () => {
   const valorInicial = {
@@ -9,7 +10,11 @@ const CrearUsuarios = () => {
     telefono: 0,
     correo: "",
   };
+
+  let { id } = useParams();
+
   const [usuario, setUsuario] = useState(valorInicial);
+  const [subId, setSubId] = useState(id);
 
   const capturarDatos = (e) => {
     const { name, value } = e.target;
@@ -34,11 +39,47 @@ const CrearUsuarios = () => {
     setUsuario({ ...valorInicial });
   };
 
+  // Funcion para actualizar el usuario
+  const actualizarUser = async (e) => {
+    e.preventDefault();
+    const newUser = {
+      nombre: usuario.nombre,
+      apellido: usuario.apellido,
+      edad: usuario.edad,
+      telefono: usuario.telefono,
+      correo: usuario.correo,
+    };
+
+    await axios.put("http://localhost:4000/api/usuarios/" + subId, newUser);
+    setUsuario({ ...valorInicial });
+    setSubId("");
+  };
+
+    // Logica para hacer una peticion a la api
+    const obtUno = async (valorId) => {
+        const res = await axios.get(
+          "http://localhost:4000/api/usuarios/" + valorId
+        );
+        setUsuario({
+          nombre: res.data.nombre,
+          apellido: res.data.apellido,
+          telefono: res.data.telefono,
+          edad: res.data.edad,
+          correo: res.data.correo,
+        });
+      };
+    
+      useEffect(() => {
+        if (subId !== "") {
+          obtUno(subId);
+        }
+      }, [subId]);
+    
   return (
     <div className="col-md-6 offset-md-3">
       <div className="card card-body">
         <form onSubmit={guardarDatos}>
-          <h2 className="text-center">CrearUsuarios</h2>
+          <h2 className="text-center">Editar/Crear</h2>
           <div className="mb-3">
             <label>Nombre:</label>
 
@@ -113,9 +154,16 @@ const CrearUsuarios = () => {
             Guardar Usuario
           </button>
         </form>
+
+        <form onSubmit={actualizarUser}>
+          <button className="btn btn-danger form-control mt-2">
+            Actualizar Informacion
+          </button>
+        </form>
       </div>
     </div>
   );
+  
 } 
 
 export default CrearUsuarios
