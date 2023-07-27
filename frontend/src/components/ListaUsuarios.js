@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
  
 const ListaUsuarios = () => {
@@ -20,10 +21,29 @@ const ListaUsuarios = () => {
     getUsuarios();
   }, []);
 
+  const confirmarEliminacion = (id) => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "No podrás revertir esto.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleEliminarUsuario(id);
+      }
+    });
+  };
+
   const handleEliminarUsuario = async (id) => {
     try {
       await axios.delete(`http://localhost:4000/api/usuarios/${id}`);
       setLista(lista.filter((usuario) => usuario._id !== id));
+      Swal.fire("¡Eliminado!", "El usuario ha sido eliminado exitosamente.", "success");
+
     } catch (error) {
       console.error('Error al eliminar el usuario:', error);
     }
@@ -48,13 +68,13 @@ const ListaUsuarios = () => {
             <div className="card-footer">
               <button
                 className="btn btn-danger"
-                onClick={() => handleEliminarUsuario(usuario._id)}
+                onClick={() => confirmarEliminacion(usuario._id)}
               >
                 Eliminar
               </button>
 
-              <Link className='btn btn-primary m-1' to={`/edit/${usuario._id}`}>
-                  Editar
+              <Link className="btn btn-primary m-1" to={`/edit/${usuario._id}`}>
+                Editar
               </Link>
             </div>
           </div>

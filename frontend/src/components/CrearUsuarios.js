@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import Swal from 'sweetalert2'
+
+
 
 const CrearUsuarios = () => {
   const valorInicial = {
@@ -29,11 +32,27 @@ const CrearUsuarios = () => {
       correo: usuario.correo,
     };
 
+  try{
     await axios.post("http://localhost:4000/api/usuarios", newUser);
 
     setUsuario({ ...valorInicial });
+  
+  
+  Swal.fire({
+    
+    icon: 'success',
+    title: 'Usuario Creado',
+    showConfirmButton: false,
+    timer: 1500
+  });
+
+  } catch (error) {
+    console.error(error);
+  }
   };
 
+
+  
   return (
     <div className="col-md-6 offset-md-3">
       <div className="card card-body">

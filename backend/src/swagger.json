@@ -1,0 +1,770 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "version": "v1.0.0",
+      "title": "Swagger para Pagina Boli",
+      "license": {
+      }
+    },
+    
+    
+    "tags": [
+      {
+        "name": "Empresas - PagoServicios y DebitoAutomatico",
+        "description": "Endpoints para manejo pago de servicios"
+      },
+      {
+        "name": "Empresas - PagoSueldos",
+        "description": "Endpoints para manejo pago de sueldos"
+      },
+  
+      {
+        "name": "Clearing Bancario",
+        "description": "Endpoints para manejo del clearing "
+      },
+      {
+        "name": "Tarjetas de credito",
+        "description": "Endpoints para manejo tarjetas de credito "
+      }
+    ],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+  
+    "paths": {
+      "/altaempresaM": {
+        "post": {
+          "tags": ["Empresas - PagoServicios y DebitoAutomatico"],
+          "summary": "Alta de cupones de pago",
+          "requestBody": {
+            "description": "Alta de cupones de pago, para pago de servicios, campo debito en '0' desactivado, en '1' activado",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Empresa"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "201": {
+              "description": "Cupon de pago generado correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer dar de alta el cupon"
+            }
+          }
+        }
+      },
+  
+      "/altasueldoM": {
+        "post": {
+          "tags": ["Empresas - PagoSueldos"],
+          "summary": "Alta de sueldos",
+          "requestBody": {
+            "description": "Alta de sueldos",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Sueldo"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "201": {
+              "description": "Sueldo de pago generado correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer generar el sueldo"
+            }
+          }
+        }
+      },
+  
+      "/altatarjeta": {
+        "post": {
+          "tags": ["Tarjetas de credito"],
+          "summary": "Alta de pagos de consumos",
+          "requestBody": {
+            "description": "Alta de consumos",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Tarjetas"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "201": {
+              "description": "Consumo enviado correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer enviar el consumo"
+            }
+          }
+        }
+      },
+  
+      "/altacomercio": {
+        "post": {
+          "tags": ["Tarjetas de credito"],
+          "summary": "Alta de pagos para pago a comercios",
+          "requestBody": {
+            "description": "Pago a comercios",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Pagos"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "201": {
+              "description": "Pago enviado correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer enviar el pago"
+            }
+          }
+        }
+      },
+  
+      "/getComercioCodigo": {
+        "post": {
+          "tags": ["Tarjetas de credito"],
+          "summary": "Obtengo los consumos por codigo especifico",
+  
+          "requestBody": {
+            "description": "El campo 'codigotransaccion' el indice de busqueda",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/PagoC"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "consumo obtenido correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer obtener el consumo"
+            }
+          }
+        }
+      },
+  
+      "/getEmpresaCUITEmpresa": {
+        "post": {
+          "tags": ["Empresas - PagoServicios y DebitoAutomatico"],
+          "summary": "Obtengo los cupones de pago para una empresa especifica",
+  
+          "requestBody": {
+            "description": "El campo 'cuitEmpresa' el indice de busqueda",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/cuitEmpresa"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "cuitEmpresa obtenido correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer obtener el cuitEmpresa"
+            }
+          }
+        }
+      },
+  
+      "/getTarjetaCodigo": {
+        "post": {
+          "tags": ["Tarjetas de credito"],
+          "summary": "Obtengo los consumos por codigo especifico",
+  
+          "requestBody": {
+            "description": "El campo 'codigotransaccion' el indice de busqueda",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/TarjetasC"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "consumo obtenido correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer obtener el consumo"
+            }
+          }
+        }
+      },
+  
+      "/altaclearingM": {
+        "post": {
+          "tags": ["Clearing Bancario"],
+          "summary": "Alta de movimientos para clearing",
+          "requestBody": {
+            "description": "Alta de movimientos clearing",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Clearing"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "201": {
+              "description": "Clearing creado correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer crear el Clearing"
+            }
+          }
+        }
+      },
+  
+      "/getClearingCodigo": {
+        "post": {
+          "tags": ["Clearing Bancario"],
+          "summary": "Obtengo movimiento de clearing por Codigo unico",
+  
+          "requestBody": {
+            "description": "El campo 'codigo' el indice de busqueda",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/ClearingC"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Clearing obtenido correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer obtener el clearing"
+            }
+          }
+        }
+      },
+  
+      "/getClearingCBUD": {
+        "post": {
+          "tags": ["Clearing Bancario"],
+          "summary": "Obtengo movimiento de clearing por CBU destino",
+  
+          "requestBody": {
+            "description": "El campo 'cbuUsuarioD' el indice de busqueda",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/ClearingD"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Clearing obtenido correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer obtener el clearing"
+            }
+          }
+        }
+      },
+  
+      "/getClearingCBUO": {
+        "post": {
+          "tags": ["Clearing Bancario"],
+          "summary": "Obtengo movimiento de clearing por CBU origen",
+  
+          "requestBody": {
+            "description": "El campo 'cbuUsuarioO' el indice de busqueda",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/ClearingO"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Clearing obtenido correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer obtener el clearing"
+            }
+          }
+        }
+      },
+  
+      "/getClearingCBUP": {
+        "post": {
+          "tags": ["Clearing Bancario"],
+          "summary": "Obtengo movimiento de clearing por CBU propio (CBU del banco)",
+  
+          "requestBody": {
+            "description": "El campo 'cbuPropio' el indice de busqueda",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/ClearingP"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Clearing obtenido correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer obtener el clearing"
+            }
+          }
+        }
+      },
+  
+      "/getSueldoCodigo": {
+        "post": {
+          "tags": ["Empresas - PagoSueldos"],
+          "summary": "Obtengo los sueldos por codigo especifico",
+  
+          "requestBody": {
+            "description": "El campo 'codigo' el indice de busqueda",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/SueldosC"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Sueldo obtenido correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer obtener el sueldo"
+            }
+          }
+        }
+      },
+      "/updateEmpresa": {
+        "put": {
+          "tags": ["Empresas - PagoServicios y DebitoAutomatico"],
+          "summary": "Actualizacion de cuotas",
+          "requestBody": {
+            "description": "Actualizo estado de cuotas, el campo 'codigopago' es el indice",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Empresa"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Cupon de pago actualizado correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer actualizar la cuota"
+            }
+          }
+        }
+      },
+      "/getEmpresaESTADOCUIT": {
+        "post": {
+          "tags": ["Empresas - PagoServicios y DebitoAutomatico"],
+          "summary": "Verificar estado de Pagos",
+          "requestBody": {
+            "description": "obtengo estado de cuotas, el campo 'cuitEmpresa' y 'estado en 'Pago total' es el indice",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/EstadoCuit"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Cupon de pago obtenido correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer obtener la cuota"
+            }
+          }
+        }
+      },
+      "/getCuenta": {
+        "post": {
+          "tags": ["Empresas - PagoServicios y DebitoAutomatico"],
+          "summary": "Consultar cuenta",
+          "requestBody": {
+            "description": "obtengo CBU a partir del CUIT",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/cuitp"
+                }
+              }
+            }
+          },
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Cupon de pago obtenido correctamente",
+              "schema": {
+                "$ref": "#/definitions/id"
+              }
+            },
+            "400": {
+              "description": "Error al querer obtener la cuota"
+            }
+          }
+        }
+      }
+    },
+  
+    
+  
+    "definitions": {
+      "id": {
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "cuitp": {
+        "properties": {
+          "cuit": {
+            "type": "string"
+          }
+        }
+      },
+      "cuitEmpresa": {
+        "properties": {
+          "cuitEmpresa": {
+            "type": "string"
+          }
+        }
+      },
+      "EstadoCuit": {
+        "properties": {
+          "cuitEmpresa": {
+            "type": "string"
+          },
+          "estado": {
+            "type": "string"
+          }
+        }
+      },
+  
+      "TarjetasC": {
+        "type": "object",
+        "properties": {
+          "codigotransaccion": {
+            "type": "string"
+          }
+        }
+      },
+      "ClearingO": {
+        "type": "object",
+        "properties": {
+          "cbuUsuarioO": {
+            "type": "string"
+          }
+        }
+      },
+      "ClearingP": {
+        "type": "object",
+        "properties": {
+          "cbuPropio": {
+            "type": "string"
+          }
+        }
+      },
+      "ClearingD": {
+        "type": "object",
+        "properties": {
+          "cbuUsuarioD": {
+            "type": "string"
+          }
+        }
+      },
+      "ClearingC": {
+        "type": "object",
+        "properties": {
+          "codigo": {
+            "type": "string"
+          }
+        }
+      },
+      "PagoC": {
+        "type": "object",
+        "properties": {
+          "codigotransaccion": {
+            "type": "string"
+          }
+        }
+      },
+      "SueldosC": {
+        "type": "object",
+        "properties": {
+          "codigo": {
+            "type": "string"
+          }
+        }
+      },
+      "cuit": {
+        "properties": {
+          "cuit": {
+            "type": "string"
+          }
+        }
+      },
+      "estado": {
+        "properties": {
+          "estado": {
+            "type": "string"
+          }
+        }
+      },
+      "Login": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Clearing": {
+        "type": "object",
+        "properties": {
+          "cbuPropio": {
+            "type": "string"
+          },
+          "cbuUsuarioO": {
+            "type": "string"
+          },
+          "cbuUsuarioD": {
+            "type": "integer"
+          },
+          "importe": {
+            "type": "string"
+          },
+          "descripcion": {
+            "type": "string"
+          },
+          "codigo": {
+            "type": "string"
+          }
+        }
+      },
+      "Sueldo": {
+        "type": "object",
+        "properties": {
+          "cbu": {
+            "type": "string"
+          },
+          "codigo": {
+            "type": "string"
+          },
+          "importe": {
+            "type": "integer"
+          },
+          "fechaPago": {
+            "type": "string"
+          },
+          "pagado": {
+            "type": "string"
+          },
+          "cbuEmpresa": {
+            "type": "string"
+          },
+          "descripcion": {
+            "type": "string"
+          }
+        }
+      },
+      "Tarjetas": {
+        "type": "object",
+        "properties": {
+          "cuit": {
+            "type": "string"
+          },
+          "codigotransaccion": {
+            "type": "string"
+          },
+          "importe": {
+            "type": "integer"
+          },
+          "fechaVencimiento": {
+            "type": "string"
+          },
+          "pagado": {
+            "type": "string"
+          },
+          "cuitEmpresa": {
+            "type": "string"
+          },
+          "descripcion": {
+            "type": "string"
+          }
+        }
+      },
+      "Pagos": {
+        "type": "object",
+        "properties": {
+          "cuit": {
+            "type": "string"
+          },
+          "codigotransaccion": {
+            "type": "string"
+          },
+          "importe": {
+            "type": "integer"
+          },
+          "fechaPago": {
+            "type": "string"
+          },
+          "pagado": {
+            "type": "string"
+          },
+          "cuitEmpresa": {
+            "type": "string"
+          },
+          "descripcion": {
+            "type": "string"
+          }
+        }
+      },
+      "Empresa": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "codigopago": {
+            "type": "string"
+          },
+          "cuitEmpresa": {
+            "type": "string"
+          },
+          "importe": {
+            "type": "integer"
+          },
+          "descripcion": {
+            "type": "string"
+          },
+          "fechaVencimiento": {
+            "type": "string"
+          },
+          "estado": {
+            "type": "string"
+          },
+          "cuit": {
+            "type": "string"
+          },
+          "debito": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
